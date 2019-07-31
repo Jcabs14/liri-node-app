@@ -1,14 +1,15 @@
 require("dotenv").config();
-var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
 
 //requirements
 var axios = require('axios');
-var nodeSpotify = require('node-spotify-api');
-var moment = require ('moment');
+// var Spotify = require('node-spotify-api');
+// var moment = require ('moment');
 
-userInput = process.argv[2];
-userInput2 = process.argv[3];
+// var keys = require("./keys.js");
+// var spotify = new Spotify(keys.spotify);
+
+var userInput = process.argv[2];
+var userInput2 = process.argv[3];
 
 //commands needed
 //concert-this
@@ -19,9 +20,9 @@ userInput2 = process.argv[3];
 //search concerts
 if(userInput === 'concert-this'){
 
-    var artist = userInput2;
+    var artist = 'taylor swift';
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(function(response){
-        HTMLFormControlsCollection.log(response.data);
+       console.log(response);
     });
 }
 //search spotify
@@ -31,6 +32,33 @@ if(userInput === 'spotify-this-song'){
 
 //search movie
 if(userInput === 'movie-this'){
+    var movieTitle = userInput2;
+    axios.get("http://www.omdbapi.com/?t="+ movieTitle +"&y=&plot=short&apikey=trilogy").then(
+  function(response) {
+    //we need the following
+    //Title of the movie.
+    var title = response.data.Title;
+    //Year the movie came out.
+    var year = response.data.Released;
+    //IMDB Rating of the movie.
+    var rating = response.data.imbdRating;
+    //Rotten Tomatoes Rating of the movie.
+    var tomatoeRating = response.data.Ratings[2];
+    //Country where the movie was produced.
+    var country = response.data.Country;
+    //Language of the movie.
+    var language = response.data.Language;
+    //Plot of the movie.
+    var plot = response.data.Plot;
+    //Actors in the movie.
+    var actors = response.data.Actors;
+
+    console.log('Movie title: ' + title + 'Released date:' + year + 
+    'imbd rating: ' + rating + 'rotton tomatoes rating: '+ tomatoeRating + 'country: ' + country + 'language: ' + language + 'plot: '+ plot + 'actors: ' + actors);
+  }
+);
+
+
 
 }
 
